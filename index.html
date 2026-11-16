@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10264d">
+  <title>EDUMWA | Bilingual Learning Platform</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fc;
+      color: #17243b;
+      line-height: 1.6;
+    }
+    header {
+      background: #10264d;
+      color: white;
+      padding: 20px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo { font-size: 27px; font-weight: bold; letter-spacing: 1px; }
+    .logo span { color: #42c5b5; }
+    nav a { color: white; text-decoration: none; margin-left: 18px; }
+    .hero {
+      background: linear-gradient(120deg, #10264d, #176b83);
+      color: white;
+      padding: 75px 7%;
+      text-align: center;
+    }
+    .hero h1 { font-size: clamp(32px, 6vw, 52px); margin-bottom: 15px; }
+    .hero p { max-width: 650px; margin: auto; color: #e1eaf5; }
+    .container { width: 90%; max-width: 1050px; margin: 35px auto; }
+    .section-title { text-align: center; margin-bottom: 25px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card, .panel {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px #14294a12;
+    }
+    .card h3 { color: #176b83; margin-bottom: 8px; }
+    .auth {
+      max-width: 480px;
+      margin: 40px auto;
+      background: white;
+      padding: 28px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px #14294a15;
+    }
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 9px 0;
+      border: 1px solid #ccd5e2;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 12px 18px;
+      background: #12a995;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 7px 5px 7px 0;
+    }
+    button:hover { background: #0d897a; }
+    .secondary { background: #10264d; }
+    .message { margin-top: 12px; font-size: 14px; overflow-wrap: anywhere; }
+    .hidden { display: none !important; }
+    .resource {
+      padding: 15px;
+      margin: 12px 0;
+      background: #eef5fa;
+      border-radius: 9px;
+    }
+    footer {
+      background: #10264d;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+    }
+    @media(max-width: 600px) {
+      header { justify-content: center; text-align: center; }
+      nav a { margin: 0 7px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">EDU<span>MWA</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#courses">Courses</a>
+    <a href="#account">Account</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Learn Today. Lead Tomorrow.</h1>
+  <p>
+    Welcome to EDUMWA, your bilingual learning platform for
+    educational resources, study notes and academic success.
+  </p>
+  <button onclick="document.getElementById('account').scrollIntoView({behavior:'smooth'})">
+    Get Started
+  </button>
+</section>
+
+<section class="container" id="about">
+  <div class="section-title">
+    <h2>About EDUMWA</h2>
+    <p>Education without boundaries.</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <h3>English Learning</h3>
+      <p>Access learning materials and study resources in English.</p>
+    </div>
+    <div class="card">
+      <h3>Apprentissage en français</h3>
+      <p>Des ressources éducatives pour apprendre en français.</p>
+    </div>
+    <div class="card">
+      <h3>Student Community</h3>
+      <p>A platform designed to support students in their studies.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container" id="courses">
+  <div class="section-title">
+    <h2>Our Learning Areas</h2>
+    <p>Explore our educational categories.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>Mathematics</h3><p>Build your mathematical knowledge.</p></div>
+    <div class="card"><h3>Sciences</h3><p>Discover scientific concepts.</p></div>
+    <div class="card"><h3>Languages</h3><p>Improve your language skills.</p></div>
+    <div class="card"><h3>Computer Science</h3><p>Develop your digital skills.</p></div>
+  </div>
+</section>
+
+<section class="container" id="account">
+  <div id="authArea" class="auth">
+    <h2>Student Account</h2>
+    <p>Create an account or sign in to access your dashboard.</p>
+
+    <input id="name" type="text" placeholder="Full name (for registration)">
+    <input id="email" type="email" placeholder="Email address">
+    <input id="password" type="password" placeholder="Password (at least 6 characters)">
+
+    <button id="registerBtn">Register</button>
+    <button id="loginBtn" class="secondary">Login</button>
+    <p id="authMessage" class="message" aria-live="polite"></p>
+  </div>
+
+  <div id="dashboard" class="panel hidden">
+    <h2>Welcome to EDUMWA!</h2>
+    <p id="welcome"></p>
+    <h3 style="margin-top:20px">Your Student Dashboard</h3>
+    <div class="resource">
+      <h4>English Study Resources</h4>
+      <p>Your English learning materials will appear here.</p>
+    </div>
+    <div class="resource">
+      <h4>Ressources en français</h4>
+      <p>Vos ressources d'apprentissage apparaîtront ici.</p>
+    </div>
+    <p id="dashboardMessage" class="message"></p>
+    <button id="logoutBtn" class="secondary">Logout</button>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 EDUMWA. Learn Today. Lead Tomorrow.</p>
+  <p>Bilingual Education Platform</p>
+</footer>
+
+<script type="module">
+  import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    updateProfile
+  } from
+    "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+  // Replace these placeholder values with your Firebase web app config.
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const authArea = document.getElementById("authArea");
+  const dashboard = document.getElementById("dashboard");
+  const message = document.getElementById("authMessage");
+
+  document.getElementById("registerBtn").addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!name || !email || !password) {
+      message.textContent = "Please complete all registration fields.";
+      return;
+    }
+
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(result.user, { displayName: name });
+      message.textContent = "Account created successfully!";
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  });
+
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      message.textContent = "Login successful!";
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut(auth);
+  });
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      authArea.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      document.getElementById("welcome").textContent =
+        "Signed in as " + (user.displayName || user.email);
+    } else {
+      authArea.classList.remove("hidden");
+      dashboard.classList.add("hidden");
+    }
+  });
+</script>
+
+</body>
+</html>
