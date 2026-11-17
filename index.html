@@ -272,5 +272,37 @@
     
 </script>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCaluS5Zh96KKxyRlmXeGHJ5VhJ5cvcmqAa4",
+    authDomain: "edumwa-61f67.firebaseapp.com",
+    projectId: "edumwa-61f67",
+    storageBucket: "edumwa-61f67.firebasestorage.app",
+    messagingSenderId: "698867222251",
+    appId: "1:698867222251:web:eb2bd0d458a1979f61e0ae"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  window.edumwaFirebase = { auth, db };
+  console.log("EDUMWA Firebase connected!");
+</script>
+  
 </body>
 </html>
