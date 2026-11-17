@@ -215,6 +215,61 @@
   appId: "1:698867222251:web:eb2bd0d458a1979f61e0ae",
   measurementId: "G-CT59H36WD1"
 };
+  
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const authArea = document.getElementById("authArea");
+  const dashboard = document.getElementById("dashboard");
+  const message = document.getElementById("authMessage");
+
+  document.getElementById("registerBtn").addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!name || !email || !password) {
+      message.textContent = "Please complete all fields.";
+      return;
+    }
+
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(result.user, { displayName: name });
+      message.textContent = "Registration successful!";
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  });
+
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        document.getElementById("email").value.trim(),
+        document.getElementById("password").value
+      );
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut(auth);
+  });
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      authArea.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      document.getElementById("welcome").textContent =
+        "Signed in as " + (user.displayName || user.email);
+    } else {
+      authArea.classList.remove("hidden");
+      dashboard.classList.add("hidden");
+    }
+  });
+    
 </script>
 
 </body>
