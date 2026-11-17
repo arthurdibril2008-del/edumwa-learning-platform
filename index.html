@@ -191,9 +191,9 @@
   <p>Bilingual Education Platform</p>
 </footer>
 
+
 <script type="module">
-  import { initializeApp } from
-    "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
 
   import {
     getAuth,
@@ -202,27 +202,35 @@
     onAuthStateChanged,
     signOut,
     updateProfile
-  } from
-    "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
-  // Replace these placeholder values with your Firebase web app config.
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+  // Keep your existing Firebase configuration here.
   const firebaseConfig = {
-  apiKey: "AIzaSyCaluS5Zh96KKxyRlmXeGHvJ5HcvcmqAa4",
-  authDomain: "edumwa-61f67.firebaseapp.com",
-  projectId: "edumwa-61f67",
-  storageBucket: "edumwa-61f67.firebasestorage.app",
-  messagingSenderId: "698867222251",
-  appId: "1:698867222251:web:eb2bd0d458a1979f61e0ae",
-  measurementId: "G-CT59H36WD1"
-};
-  
+    apiKey: "PASTE_YOUR_EXISTING_API_KEY",
+    authDomain: "edumwa-61f67.firebaseapp.com",
+    projectId: "edumwa-61f67",
+    storageBucket: "edumwa-61f67.firebasestorage.app",
+    messagingSenderId: "698867222251",
+    appId: "1:698867222251:web:eb2bd0d458a1979f61e0ae",
+    measurementId: "G-CT59H36WD1"
+  };
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
   const authArea = document.getElementById("authArea");
   const dashboard = document.getElementById("dashboard");
   const message = document.getElementById("authMessage");
 
+  // REGISTER
   document.getElementById("registerBtn").addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -234,14 +242,29 @@
     }
 
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(result.user, { displayName: name });
+      const result = await createUserWithEmailAndPassword(
+        auth, email, password
+      );
+
+      await updateProfile(result.user, {
+        displayName: name
+      });
+
+      await setDoc(doc(db, "users", result.user.uid), {
+        fullName: name,
+        email: result.user.email,
+        level: "Not selected",
+        language: "English",
+        createdAt: serverTimestamp()
+      });
+
       message.textContent = "Registration successful!";
     } catch (error) {
       message.textContent = error.message;
     }
   });
 
+  // LOGIN
   document.getElementById("loginBtn").addEventListener("click", async () => {
     try {
       await signInWithEmailAndPassword(
@@ -254,14 +277,21 @@
     }
   });
 
+  // LOGOUT
   document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch (error) {
+      message.textContent = error.message;
+    }
   });
 
+  // AUTHENTICATION STATE
   onAuthStateChanged(auth, user => {
     if (user) {
       authArea.classList.add("hidden");
       dashboard.classList.remove("hidden");
+
       document.getElementById("welcome").textContent =
         "Signed in as " + (user.displayName || user.email);
     } else {
@@ -269,40 +299,10 @@
       dashboard.classList.add("hidden");
     }
   });
-    
-</script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-  import {
-    getFirestore,
-    doc,
-    setDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCaluS5Zh96KKxyRlmXeGHJ5VhJ5cvcmqAa4",
-    authDomain: "edumwa-61f67.firebaseapp.com",
-    projectId: "edumwa-61f67",
-    storageBucket: "edumwa-61f67.firebasestorage.app",
-    messagingSenderId: "698867222251",
-    appId: "1:698867222251:web:eb2bd0d458a1979f61e0ae"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
 
   window.edumwaFirebase = { auth, db };
+
   console.log("EDUMWA Firebase connected!");
 </script>
-  
 </body>
 </html>
